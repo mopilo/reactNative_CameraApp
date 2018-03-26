@@ -8,6 +8,7 @@ import {
   Dimensions,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -60,11 +61,18 @@ import {
             source={{ uri: this.state.path }}
             style={styles.preview}
           />
-          <Text
+          <TouchableOpacity
             style={styles.cancel}
-            onPress={() => this.setState({ path: data.pathnpm  })}
-          >Cancel
-          </Text>
+            onPress={() => this.setState({ path: data.path  })}>
+                <Icon name="close" size={30} style={{color: 'white'}}/>
+          </TouchableOpacity>
+
+           <TouchableOpacity
+            style={styles.cancel}
+            onPress={() => console.log("next")}>
+                <Icon name="arrow-forward" size={30} style={{color: 'white', marginTop: 50}}/>
+          </TouchableOpacity>
+
         </View>
       );
     }

@@ -38,8 +38,7 @@ render(){
             ref= "camera"
                 style={styles.preview}
                 aspect={Camera.constants.Aspect.fill}>
-            <TouchableOpacity>
-            <Text onPress={this.startRecord.bind(this)}> Start recording </Text>
+            <TouchableOpacity style={styles.capture} onPress={this.startRecord.bind(this)}>
             <Text onPress={this.endVideo.bind(this)}> Stop recording </Text>           
             </TouchableOpacity>
         </Camera>
@@ -57,13 +56,12 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width
      },
      capture: {
-        flex: 0,
-        backgroundColor: '#fff',
-        borderRadius: 50,
-        height: 50,
-        width: 50,
-        color: '#000',
-        padding: 10,
-        margin: 40
-     }
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        borderWidth: 5,
+        borderColor: '#FFF',
+        marginBottom: 15,
+      }
+     
 });
