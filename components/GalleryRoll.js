@@ -6,6 +6,9 @@ import {
   ListView,
   View,
   Text,
+  Modal,
+  TouchableHighlight,
+  Button
 } from 'react-native';
 import CameraRoll from 'rn-camera-roll';
 
@@ -20,10 +23,15 @@ const styles = {
     justifyContent: 'center',
   },
   image: {
-    width: 120,
+    width: 110,
     height: 120,
     margin: 3,
   },
+  imageEditorStyle: {
+    height: 400,
+    width: 600
+  }
+
 };
 
 let PHOTOS_COUNT_BY_FETCH = 100;
@@ -35,13 +43,19 @@ export default class GalleryRoll extends Component {
 
   constructor(props) {
     super(props);
-
-    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2, r3) => r1 !== r2});
+    this.state = {
+      modalVisible: false,
+      photo:"",
+    }
+    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.lastPhotoFetched = undefined;
     this.images = [];
     this.state = this.getDataSourceState();
     this.fetchPhotos();
+  
   }
+
+
 
   getDataSourceState() {
     return {
@@ -71,12 +85,18 @@ export default class GalleryRoll extends Component {
   fetchPhotos(count = PHOTOS_COUNT_BY_FETCH, after) {
     CameraRoll.getPhotos({
       first: count,
-      after,
+      after
     }, this.onPhotosFetchedSuccess.bind(this), this.onPhotosFetchError.bind(this));
   }
 
   onEndReached() {
     this.fetchPhotos(PHOTOS_COUNT_BY_FETCH, this.lastPhotoFetched);
+  }
+
+  setModalVisible(uriImages){
+    this.setState({modalVisible: !this.state.modalVisible});
+    this.setState({photo: uriImages});
+    console.log(uriImages);
   }
 
   render() {
@@ -89,15 +109,42 @@ export default class GalleryRoll extends Component {
           onEndReachedThreshold={100}
           enableEmptySections={true}
           showsVerticalScrollIndicator={false}
-          renderRow={(image) => {return (
-            <View>
-              <Image
-                style={styles.image}
-                source={{ uri: image.uri }}
-              />
-            </View>
-          )}}
-        />
+          renderRow=
+          {(image) => 
+            {
+              return (
+                  <View>
+                    <TouchableHighlight key={image.uri}
+                    onPress={() => {
+                      {/*passing the clicked image to function */}
+                      this.setModalVisible(image.uri);
+                    }}>
+                    <Image
+                      style={styles.image}
+                      source={{ uri: image.uri }}/></TouchableHighlight>
+                  </View>
+          )}}>
+<Modal
+        animationType={"slide"}
+        transparent={false}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {alert("Modal has been closed!")}}
+      >
+        <View>
+          <Image
+            style={styles.imageEditorStyle}
+            source={{uri: this.state.photo}}
+          />
+          <Button
+            onPress={() => this.setState({modalVisible: false})}
+            title="Cancel"
+            color="#841584"
+          />
+        </View>
+      </Modal>
+        </ListView>  
+         
+             
       </View>
     );
   }

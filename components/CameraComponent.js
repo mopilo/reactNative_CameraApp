@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import {StackNavigator} from 'react-navigation'
 
 
   export default class CameraComponent extends Component {
