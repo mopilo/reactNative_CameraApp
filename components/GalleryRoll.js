@@ -28,8 +28,10 @@ const styles = {
     margin: 3,
   },
   imageEditorStyle: {
-    height: 400,
-    width: 600
+    flexWrap: 'wrap', 
+    height: 581,
+    width: 360,
+    alignSelf: 'center'
   }
 
 };
@@ -112,10 +114,12 @@ export default class GalleryRoll extends Component {
                       this.setModalVisible(image.uri);
                     }}>
                     <Image
+                      resizeMode={Image.resizeMode.cover}
                       style={styles.image}
                       source={{ uri: image.uri }}/></TouchableHighlight>
                   </View>
-          )}}>
+          )}}>        </ListView>  
+
 <Modal
         animationType={"slide"}
         transparent={false}
@@ -134,7 +138,6 @@ export default class GalleryRoll extends Component {
           />
         </View>
       </Modal>
-        </ListView>  
          
              
       </View>
