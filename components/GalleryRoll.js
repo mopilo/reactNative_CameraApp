@@ -45,22 +45,13 @@ export default class GalleryRoll extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      photo:"",
+      photo:'',
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     }
-    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.lastPhotoFetched = undefined;
     this.images = [];
-    this.state = this.getDataSourceState();
     this.fetchPhotos();
   
-  }
-
-
-
-  getDataSourceState() {
-    return {
-      dataSource: this.ds.cloneWithRows(this.images),
-    };
   }
 
   getPhotosFromCameraRollData(data) {
@@ -73,7 +64,8 @@ export default class GalleryRoll extends Component {
     const newPhotos = this.getPhotosFromCameraRollData(data);
     console.log(data);
     this.images = this.images.concat(newPhotos);
-    this.setState(this.getDataSourceState());
+    this.state.dataSource = this.state.dataSource.cloneWithRows(this.images);
+    this.setState(this.state.dataSource);
     if (newPhotos.length) this.lastPhotoFetched = newPhotos[newPhotos.length - 1].uri;
   }
 
@@ -96,7 +88,7 @@ export default class GalleryRoll extends Component {
   setModalVisible(uriImages){
     this.setState({modalVisible: !this.state.modalVisible});
     this.setState({photo: uriImages});
-    console.log(uriImages);
+    console.log(this.state.modalVisible);
   }
 
   render() {

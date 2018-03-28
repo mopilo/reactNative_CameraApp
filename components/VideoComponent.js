@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Camera from 'react-native-camera';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import {
   Platform,
   StyleSheet,
@@ -29,7 +30,7 @@ startVideoRecording()
     .then((data) => console.log(data))
     .catch(err => console.error(err));
 }
-startRecord(){ startVideo = setTimeout(this.startVideoRecording.bind(this), 50);}
+startRecord(){ startVideo = setTimeout(this.startVideoRecording.bind(this), 5000);}
 
 endVideo(){ this.refs.camera.stopCapture(); }
 render(){
@@ -38,8 +39,7 @@ render(){
             ref= "camera"
                 style={styles.preview}
                 aspect={Camera.constants.Aspect.fill}>
-            <TouchableOpacity style={styles.capture} onPress={this.startRecord.bind(this)}>
-            <Text onPress={this.endVideo.bind(this)}> Stop recording </Text>           
+            <TouchableOpacity style={styles.capture} onPressIn={this.startRecord.bind(this)} onPressOut={this.endVideo.bind(this)}>
             </TouchableOpacity>
         </Camera>
     );
