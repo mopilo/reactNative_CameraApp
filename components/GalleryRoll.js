@@ -8,9 +8,14 @@ import {
   Text,
   Modal,
   TouchableHighlight,
-  Button
+  Button,
+  Dimensions
 } from 'react-native';
 import CameraRoll from 'rn-camera-roll';
+// import {Surface} from 'gl-react-native';
+// import ImageFilter from 'react-native-gl-image-filters';
+
+let {height, width} = Dimensions.get('window');
 
 const styles = {
   container: {
@@ -127,10 +132,12 @@ export default class GalleryRoll extends Component {
         onRequestClose={() => {alert("Modal has been closed!")}}
       >
         <View>
-          <Image
+            <Image
             style={styles.imageEditorStyle}
             source={{uri: this.state.photo}}
+            resizeMode={Image.resizeMode.cover}
           />
+          
           <Button
             onPress={() => this.setState({modalVisible: false})}
             title="Cancel"

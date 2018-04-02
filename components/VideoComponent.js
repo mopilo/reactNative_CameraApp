@@ -18,10 +18,9 @@ export default class VideoComponent extends Component {
     constructor(){
         super();
         this.state= {
-            captureMode: Camera.constants.CaptureMode.video
+            captureMode: Camera.constants.CaptureMode.video,
+            timer: 0
         };
-        isRecording: false;
-        timer: 0;
     }
 
 startVideoRecording() 
@@ -29,16 +28,27 @@ startVideoRecording()
     this.refs.camera.capture({mode: this.state.captureMode})
     .then((data) => console.log(data))
     .catch(err => console.error(err));
-}
-startRecord(){ startVideo = setTimeout(this.startVideoRecording.bind(this), 5000);}
 
-endVideo(){ this.refs.camera.stopCapture(); }
+    this.setState(prevState => ({
+        timer: prevState.timer + 1
+    }));
+}
+startRecord()
+{ 
+    startVideo = setInterval(this.startVideoRecording.bind(this), 1000);}
+
+endVideo()
+{ 
+    this.refs.camera.stopCapture(); 
+    clearInterval();
+}
 render(){
     return(
         <Camera
             ref= "camera"
                 style={styles.preview}
                 aspect={Camera.constants.Aspect.fill}>
+                <Text style={styles.textView}>{this.state.timer}</Text>
             <TouchableOpacity style={styles.capture} onPressIn={this.startRecord.bind(this)} onPressOut={this.endVideo.bind(this)}>
             </TouchableOpacity>
         </Camera>
@@ -62,6 +72,12 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: '#FFF',
         marginBottom: 15,
+      },
+      textView: {
+        color: 'white',
+        fontSize: 18,
+        textAlign: 'center',
+        bottom: 500
       }
      
 });
