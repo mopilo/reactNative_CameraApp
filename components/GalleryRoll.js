@@ -33,10 +33,8 @@ const styles = {
     margin: 3,
   },
   imageEditorStyle: {
-    flexWrap: 'wrap', 
     height: 581,
     width: 360,
-    alignSelf: 'center'
   }
 
 };

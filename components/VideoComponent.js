@@ -49,7 +49,7 @@ render(){
             ref= "camera"
                 style={styles.preview}
                 aspect={Camera.constants.Aspect.fill}>
-                <Text style={styles.textView}>{this.state.timer}</Text>
+                <Text style={styles.textView}>{secToMin(this.state.timer)}</Text>
             <TouchableOpacity style={styles.capture} onPressIn={this.startRecord.bind(this)} onPressOut={this.endVideo.bind(this)}>
             </TouchableOpacity>
         </Camera>
