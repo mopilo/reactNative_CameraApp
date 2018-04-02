@@ -9,6 +9,7 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native';
+import secToMin from 'sec-to-min';
 
 let startVideo = false;
 

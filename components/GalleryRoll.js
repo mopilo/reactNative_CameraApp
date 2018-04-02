@@ -100,7 +100,7 @@ export default class GalleryRoll extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <ListView
           contentContainerStyle={styles.imageGrid}
           dataSource={this.state.dataSource}
