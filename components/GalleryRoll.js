@@ -43,7 +43,7 @@ let PHOTOS_COUNT_BY_FETCH = 100;
 
 export default class GalleryRoll extends Component {
   static navigationOptions = {
-    header: null ,
+    header: null 
   };
 
   constructor(props) {
@@ -117,7 +117,7 @@ export default class GalleryRoll extends Component {
                       this.setModalVisible(image.uri);
                     }}>
                     <Image
-                      resizeMode={Image.resizeMode.cover}
+                      resizeMode={Image.resizeMode.contain}
                       style={styles.image}
                       source={{ uri: image.uri }}/></TouchableHighlight>
                   </View>
@@ -142,7 +142,7 @@ export default class GalleryRoll extends Component {
             color="#841584"
           />
         </View>
-      </Modal>
+</Modal>
          
              
       </View>
